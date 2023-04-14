@@ -1163,6 +1163,8 @@ const metamask = {
     await module.exports.getExtensionDetails();
     await playwright.fixBlankPage();
     await playwright.fixCriticalError();
+    // get reference to 'I accept the risks' button and click it
+
     if (
       await playwright
         .metamaskWindow()

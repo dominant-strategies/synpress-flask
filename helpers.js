@@ -133,11 +133,21 @@ module.exports = {
           `Metamask version found! Filename: ${filename}; Download url: ${downloadUrl}; Tag name: ${tagName}`,
         );
       }
-      return {
-        filename,
-        downloadUrl,
-        tagName,
+      // uncomment this to get normal metamask
+      // return {
+      //   filename,
+      //   downloadUrl,
+      //   tagName,
+      // };
+
+      // hard coding getting flask 10.28.2 for now
+       return {
+        filename: 'metamask-flask-chrome-10.28.2-flask.0.zip',
+        downloadUrl:
+          'https://github.com/MetaMask/metamask-extension/releases/download/v10.28.2/metamask-flask-chrome-10.28.2-flask.0.zip',
+        tagName: 'metamask-flask-chrome-10.28.2-flask.0',
       };
+
     } catch (e) {
       if (e.response && e.response.status === 403) {
         throw new Error(

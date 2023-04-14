@@ -1,4 +1,5 @@
 const onboardingFlow = '.onboarding-flow';
+const experimentalArea = `${onboardingFlow} .experimental-area`;
 const metametricsPage = `${onboardingFlow} [data-testid="onboarding-metametrics"]`;
 const optOutAnalyticsButton = `${metametricsPage} [data-testid="metametrics-no-thanks"]`;
 module.exports.metametricsPageElements = {
@@ -7,6 +8,7 @@ module.exports.metametricsPageElements = {
 };
 
 const app = '#app-content .app';
+const flaskAcceptRisksButton = `.button btn--rounded btn-primary`;
 const onboardingWelcomePage = `${onboardingFlow} [data-testid="onboarding-welcome"]`;
 const importWalletButton = `${onboardingWelcomePage} [data-testid="onboarding-import-wallet"]`;
 const createWalletButton = `${onboardingWelcomePage} [data-testid="onboarding-create-wallet"]`;
@@ -15,6 +17,8 @@ module.exports.onboardingWelcomePageElements = {
   onboardingWelcomePage,
   importWalletButton,
   createWalletButton,
+  flaskAcceptRisksButton,
+  experimentalArea,
 };
 
 const firstTimeFlowImportPage = `${onboardingFlow} [data-testid="import-srp"]`;
