@@ -96,58 +96,63 @@ module.exports = {
     }
   },
   async getMetamaskReleases(version) {
-    log(`Trying to find metamask version ${version} in GitHub releases..`);
+    log(
+      `Trying to find metamask flask version ${version} in GitHub releases..`,
+    );
     let filename;
     let downloadUrl;
     let tagName;
     let response;
 
     try {
-      if (version === 'latest' || !version) {
-        if (process.env.GH_USERNAME && process.env.GH_PAT) {
-          response = await axios.get(
-            'https://api.github.com/repos/metamask/metamask-extension/releases',
-            {
-              auth: {
-                username: process.env.GH_USERNAME,
-                password: process.env.GH_PAT,
-              },
+      if (process.env.GH_USERNAME && process.env.GH_PAT) {
+        response = await axios.get(
+          'https://api.github.com/repos/metamask/metamask-extension/releases',
+          {
+            auth: {
+              username: process.env.GH_USERNAME,
+              password: process.env.GH_PAT,
             },
-          );
-        } else {
-          response = await axios.get(
-            'https://api.github.com/repos/metamask/metamask-extension/releases',
-          );
-        }
-        filename = response.data[0].assets[0].name;
-        downloadUrl = response.data[0].assets[0].browser_download_url;
-        tagName = response.data[0].tag_name;
-        log(
-          `Metamask version found! Filename: ${filename}; Download url: ${downloadUrl}; Tag name: ${tagName}`,
+          },
         );
-      } else if (version) {
-        filename = `metamask-chrome-${version}.zip`;
-        downloadUrl = `https://github.com/MetaMask/metamask-extension/releases/download/v${version}/metamask-chrome-${version}.zip`;
-        tagName = `metamask-chrome-${version}`;
-        log(
-          `Metamask version found! Filename: ${filename}; Download url: ${downloadUrl}; Tag name: ${tagName}`,
+      } else {
+        response = await axios.get(
+          'https://api.github.com/repos/metamask/metamask-extension/releases',
         );
       }
-      // uncomment this to get normal metamask
-      // return {
-      //   filename,
-      //   downloadUrl,
-      //   tagName,
-      // };
 
-      // hard coding getting flask 10.28.2 for now
-       return {
-        filename: 'metamask-flask-chrome-10.28.2-flask.0.zip',
-        downloadUrl:
-          'https://github.com/MetaMask/metamask-extension/releases/download/v10.28.2/metamask-flask-chrome-10.28.2-flask.0.zip',
-        tagName: 'metamask-flask-chrome-10.28.2-flask.0',
+      const responseFilteredForFlask = response.data.find(release =>
+        release.assets.some(asset => asset.name.includes('flask')),
+      );
+
+      const flaskRelease = responseFilteredForFlask.assets.find(asset =>
+        asset.name.includes('flask'),
+      );
+
+      let flaskVersion;
+      if (process.env.flaskVersion) {
+        flaskVersion = process.env.FLASK_VERSION;
+      } else {
+        flaskVersion = '10.29.0-flask.0';
+      }
+
+      if (flaskRelease) {
+        filename = flaskRelease.name;
+        downloadUrl = flaskRelease.browser_download_url;
+        tagName = `metamask-flask-chrome-${flaskVersion}`;
+      } else {
+        throw new Error('No MetaMask Flask release found.');
+      }
+
+      log(
+        `Metamask Flask version found! Filename: ${filename}; Download url: ${downloadUrl}; Tag name: ${tagName}`,
+      );
+
+      return {
+        filename,
+        downloadUrl,
+        tagName,
       };
-
     } catch (e) {
       if (e.response && e.response.status === 403) {
         throw new Error(

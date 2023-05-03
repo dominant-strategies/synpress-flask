@@ -8,7 +8,6 @@ module.exports.metametricsPageElements = {
 };
 
 const app = '#app-content .app';
-const flaskAcceptRisksButton = `.button btn--rounded btn-primary`;
 const onboardingWelcomePage = `${onboardingFlow} [data-testid="onboarding-welcome"]`;
 const importWalletButton = `${onboardingWelcomePage} [data-testid="onboarding-import-wallet"]`;
 const createWalletButton = `${onboardingWelcomePage} [data-testid="onboarding-create-wallet"]`;
@@ -17,7 +16,6 @@ module.exports.onboardingWelcomePageElements = {
   onboardingWelcomePage,
   importWalletButton,
   createWalletButton,
-  flaskAcceptRisksButton,
   experimentalArea,
 };
 

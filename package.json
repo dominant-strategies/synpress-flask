@@ -1,7 +1,7 @@
 {
-  "name": "@synthetixio/synpress",
+  "name": "@skunal8197/synpress-flask",
   "version": "3.5.0",
-  "description": "Synpress is e2e testing framework based around Cypress.io & playwright with included MetaMask support. Test your dapps with ease.",
+  "description": "Synpress Flask is e2e testing framework based around Cypress.io & playwright with included MetaMask Flask support. Test your dapps with ease.",
   "keywords": [
     "Synpress",
     "Cypress",

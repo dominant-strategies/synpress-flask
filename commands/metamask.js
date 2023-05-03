@@ -1163,7 +1163,16 @@ const metamask = {
     await module.exports.getExtensionDetails();
     await playwright.fixBlankPage();
     await playwright.fixCriticalError();
-    // get reference to 'I accept the risks' button and click it
+
+    // get past flask risk warning
+    if (
+      await playwright
+        .metamaskWindow()
+        .locator('button:text("I accept the risks")')
+        .isVisible()
+    ) {
+      await playwright.waitAndClick('button:text("I accept the risks")');
+    }
 
     if (
       await playwright
@@ -1178,14 +1187,6 @@ const metamask = {
         // private key
         await module.exports.createWallet(password);
         await module.exports.importAccount(secretWordsOrPrivateKey);
-      }
-
-      await setupSettings(enableAdvancedSettings, enableExperimentalSettings);
-
-      if (isCustomNetwork) {
-        await module.exports.addNetwork(network);
-      } else {
-        await module.exports.changeNetwork(network);
       }
       walletAddress = await module.exports.getWalletAddress();
       await playwright.switchToCypressWindow();
