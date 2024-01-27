@@ -98,6 +98,5 @@ function parseTypes(code) {
       commandName: functionName,
     };
   });
-
   return synpressCommands;
 }
