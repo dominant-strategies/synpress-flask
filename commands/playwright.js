@@ -34,9 +34,7 @@ module.exports = {
     return activeTabName;
   },
   async init(playwrightInstance) {
-    const chromium = playwrightInstance
-      ? playwrightInstance
-      : require('@playwright/test').chromium;
+    const chromium = playwrightInstance || require('@playwright/test').chromium;
     const debuggerDetails = await fetch('http://127.0.0.1:9222/json/version'); //DevSkim: ignore DS137138
     const debuggerDetailsConfig = await debuggerDetails.json();
     const webSocketDebuggerUrl = debuggerDetailsConfig.webSocketDebuggerUrl;
